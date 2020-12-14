@@ -64,8 +64,8 @@ function getPowerFunction(exponent) {
  */
 function getPolynom(/* ...array */) {
   // return (x) => {
-  //   let sum = 0;
   //   if (!array) return null;
+  //   let sum = 0;
   //   array.reverse().forEach((num, index) => {
   //     sum += num * x ** index;
   //   });
@@ -90,8 +90,12 @@ function getPolynom(/* ...array */) {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  let retur;
+  return () => {
+    if (retur === undefined) retur = func();
+    return retur;
+  };
 }
 
 
@@ -110,8 +114,18 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  let attem = 0;
+  return function retr() {
+    try {
+      func();
+    } catch (e) {
+      attem += 1;
+      if (attem < attempts) retr();
+    }
+
+    return func();
+  };
 }
 
 
@@ -138,8 +152,15 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return (...args) => {
+    const argsJSON = args.map((a) => JSON.stringify(a)).join();
+    logFunc(`${func.name}(${argsJSON}) starts`);
+    const callFunc = func(...args);
+    logFunc(`${func.name}(${argsJSON}) ends`);
+
+    return callFunc;
+  };
 }
 
 
@@ -156,8 +177,8 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...argsRet) => fn(...args1, ...argsRet);
 }
 
 
@@ -178,8 +199,12 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let counter = startFrom - 1;
+  return () => {
+    counter += 1;
+    return counter;
+  };
 }
 
 
