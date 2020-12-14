@@ -20,8 +20,14 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  return {
+    width,
+    height,
+    getArea() {
+      return this.width * this.height;
+    },
+  };
 }
 
 
@@ -35,8 +41,8 @@ function Rectangle(/* width, height */) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
 
 
@@ -51,8 +57,10 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const parsedObject = JSON.parse(json);
+  Object.setPrototypeOf(parsedObject, proto);
+  return parsedObject;
 }
 
 
@@ -111,6 +119,54 @@ function fromJSON(/* proto, json */) {
  */
 
 const cssSelectorBuilder = {
+  // sel: '',
+
+  // stringify() {
+  //   const selec = this.sel;
+  //   this.sel = '';
+  //   console.log(selec);
+  //   return selec;
+  // },
+
+  // element(value) {
+  //   this.sel += `${value}`;
+  //   return this;
+  // },
+
+  // id(value) {
+  //   this.sel += `#${value}`;
+  //   return this;
+  // },
+
+  // class(value) {
+  //   this.sel += `.${value}`;
+  //   return this;
+  // },
+
+  // attr(value) {
+  //   this.sel += `[${value}]`;
+  //   return this;
+  // },
+
+  // pseudoClass(value) {
+  //   this.sel += `:${value}`;
+  //   return this;
+  // },
+
+  // pseudoElement(value) {
+  //   this.sel += `::${value}`;
+  //   return this;
+  // },
+
+  // combine(selector1, combinator, selector2) {
+  //   const reg = new RegExp(`${selector1}${selector2}`);
+  //   const { index } = this.sel.match(reg);
+  //   this.sel = this.sel.slice(0, index);
+
+  //   this.sel = `${selector1.stringify()} ${combinator} ${selector2.stringify()}`;
+
+  //   return this;
+  // },
   element(/* value */) {
     throw new Error('Not implemented');
   },
