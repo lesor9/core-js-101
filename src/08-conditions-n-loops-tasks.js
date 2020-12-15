@@ -130,6 +130,35 @@ function isTriangle(a, b, c) {
  *
  */
 function doRectanglesOverlap(/* rect1, rect2 */) {
+//   console.log('\n====start====');
+//   const rect1right = rect1.left + rect1.width;
+//   const rect1bottom = rect1.top + rect1.height;
+//   const rect2right = rect2.left + rect2.width;
+//   //   const rect2bottom = rect2.top + rect2.height;
+
+  //   // dot1 top-left
+  //   const condit1 = rect1.top <= rect2.top && rect1.left <= rect2.left;
+  //   const condit2 = rect2.top <= rect1bottom && rect1right <= rect2.left;
+  //   console.log(condit1);
+  //   console.log(condit2);
+  //   console.log(condit1 && condit2);
+  //   if (condit1 && condit2) {
+  //     console.log('zashlo v if');
+  //     return true;
+  //   }
+  //   console.log('part 2');
+
+  //   // dot2 bottow-right
+  //   const condit3 = rect1.top >= rect2.top && rect1.left >= rect2.left;
+  //   const condit4 = rect2right >= rect2.left && rect2.top <= rect1.top;
+  //   console.log(condit3);
+  //   console.log(condit4);
+  //   console.log(condit3 && condit4);
+  //   if (condit3 && condit4) return true;
+
+  //   console.log('the end');
+
+  //   return false;
   throw new Error('Not implemented');
 }
 
@@ -466,8 +495,43 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  let answer;
+
+  // left to right diag
+  [[answer]] = position;
+
+  for (let i = 1; i < 3; i += 1) {
+    if (position[i][i] !== answer) answer = undefined;
+  }
+
+  if (!answer) {
+    // right to left diag
+    [[,, answer]] = position;
+    if (position[1][1] !== answer) answer = undefined;
+    if (position[2][0] !== answer) answer = undefined;
+  }
+
+  // check lines
+  position.forEach((line) => {
+    while (line.length !== 3) line.push(undefined);
+    const first = line[0];
+    const res = line.every((symbol) => symbol === first);
+    if (res) answer = first;
+  });
+
+  const transpose = (matrix) => matrix[0].map((_, i) => matrix.map((row) => row[i]));
+  const newPosition = transpose(position);
+
+  // check columns
+  newPosition.forEach((line) => {
+    while (line.length !== 3) line.push(undefined);
+    const first = line[0];
+    const res = line.every((symbol) => symbol === first);
+    if (res) answer = first;
+  });
+
+  return answer;
 }
 
 
